@@ -1,25 +1,62 @@
-:root {
-  --bg: #050506;
-  --accent: #8a2be2;
-  --accent-strong: #b16cff;
-  --muted: #bfbfbf;
-  --transition: 0.4s ease;
-}
+/* === MODO CLARO / OSCURO === */
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
+/* Estado por defecto: modo oscuro (ya existente) */
 body {
+  transition: background var(--transition), color var(--transition);
+}
+
+/* Estilos para el modo claro */
+body.light-mode {
+  --bg: #f5f5f7;
+  --accent: #6a0dad;
+  --accent-strong: #8b3eff;
+  --muted: #333;
   background: var(--bg);
-  color: #eee;
-  font-family: 'Inter', sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
+  color: #111;
+}
+
+/* Ajustes específicos en modo claro */
+body.light-mode header {
+  background: rgba(255, 255, 255, 0.6);
+  color: #000;
+}
+
+body.light-mode .logo-dot {
+  box-shadow: 0 0 15px rgba(107, 0, 255, 0.3);
+}
+
+body.light-mode .menu-links a {
+  color: #333;
+}
+
+body.light-mode .menu-links a:hover {
+  background: rgba(138, 43, 226, 0.15);
+  color: #000;
+}
+
+body.light-mode footer {
+  background: rgba(255, 255, 255, 0.5);
+  color: #333;
+}
+
+/* Botón para cambiar el tema */
+.theme-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-strong));
+  border: none;
+  color: #000;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.4);
+  transition: var(--transition);
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
 }
 
 /* Header */
@@ -432,4 +469,122 @@ footer {
 @keyframes pageFadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
+}
+
+/* === Theme toggle minimal styles (no sobrescribe reglas previas) === */
+.btn-theme {
+  margin-left: 12px;
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-size: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: var(--transition);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.btn-theme:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.25);
+}
+
+/* Modo claro: sólo variables/ajustes que no rompen nada existente */
+body.light {
+  --bg: #f5f5f7;
+  --accent: #6a0dad;
+  --accent-strong: #8b3eff;
+  --muted: #333;
+  background: var(--bg);
+  color: #111;
+}
+
+/* Ajustes puntuales en modo claro (no sobrescriben reglas que no existan) */
+body.light header {
+  background: rgba(255,255,255,0.7);
+}
+body.light footer {
+  background: rgba(255,255,255,0.6);
+  color: var(--muted);
+}
+body.light .menu-links a { color: var(--muted); }
+
+/* === FIX: Contraste del menú hamburguesa en modo claro === */
+
+/* Fondo del overlay y menú lateral se aclaran un poco */
+body.light .menu-overlay {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+body.light .side-menu {
+  background: #f0f0f0;
+}
+
+/* Los enlaces vuelven a tener contraste suficiente */
+body.light .menu-links a {
+  color: #222;
+}
+
+body.light .menu-links a:hover {
+  background: rgba(138, 43, 226, 0.15);
+  color: #000;
+}
+
+/* Botón de cierre (la “X”) visible sobre fondo claro */
+body.light .x-line {
+  background: var(--accent);
+}
+
+/* Icono hamburguesa visible también */
+body.light .hamburger-line,
+body.light .hamburger-line::before,
+body.light .hamburger-line::after {
+  background: var(--accent);
+}
+
+/* Botón tema: flotante, no rompe layout */
+#theme-toggle {
+  position: fixed;        /* siempre en la pantalla */
+  top: 12px;              /* ajusta según tu header */
+  right: 15px;            /* margen desde la derecha */
+  background: transparent;
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  z-index: 500;           /* por encima del header */
+}
+
+#theme-toggle:hover {
+  background: var(--accent);
+  color: #000;
+  box-shadow: 0 0 10px rgba(138, 43, 226, 0.25);
+}
+
+/* Centrar horizontalmente main */
+main {
+  margin: 80px auto 0 auto; /* top 80px para separar del header, auto a los lados */
+  width: 90%;
+  max-width: 900px;
+  text-align: center; /* centrar texto e hijos */
+}
+
+main .view {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* centra horizontalmente todos los hijos */
+  text-align: center;
+  width: 100%;
 }
